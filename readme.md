@@ -5,4 +5,4 @@
 - Email: andres.meneguzzo@gmail.com
 
 ## Read report on Github Pages
-Link: https://andymeneguzzo.github.io/Damped-Oscillator-Anomaly-Detection-with-LSTM-Autoencoder/
+Link: 
