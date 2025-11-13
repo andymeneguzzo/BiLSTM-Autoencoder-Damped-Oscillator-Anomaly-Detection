@@ -5,4 +5,4 @@
 - Email: andres.meneguzzo@gmail.com
 
 ## Read report on Github Pages
-Link: 
+Link: https://andymeneguzzo.github.io/BiLSTM-Autoencoder-Damped-Oscillator-Anomaly-Detection/
