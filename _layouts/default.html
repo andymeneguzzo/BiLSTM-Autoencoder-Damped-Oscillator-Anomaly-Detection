@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }}</title>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      color: #222;
+      background-color: #fafafa;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* Prevent page-wide horizontal scrolling */
+    }
+
+    main {
+      max-width: 850px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      overflow-x: hidden; /* Prevent container horizontal scrolling */
+    }
+
+    h1, h2, h3 {
+      line-height: 1.25;
+      color: #111;
+    }
+
+    img {
+      display: block;
+      margin: 1.5rem auto;
+      max-width: 100%;
+      height: auto;
+    }
+
+    figure {
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    figcaption {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 0.5rem;
+    }
+
+    pre {
+      background: #f6f8fa;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+
+    code {
+      background: #f6f8fa;
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+    }
+
+    a {
+      color: #0366d6;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Boxed table styling - responsive */
+    /* Make tables scrollable on small screens */
+    table {
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+      width: 100%;
+      max-width: 100%;
+      margin: 1.5rem 0;
+      background-color: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: table;
+      table-layout: auto;
+    }
+
+    /* On small screens, make tables horizontally scrollable */
+    @media (max-width: 768px) {
+      /* Make table a scrollable block container */
+      table {
+        display: block;
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+      }
+      
+      /* Make thead and tbody separate tables with fixed layout for perfect alignment */
+      table thead {
+        display: table;
+        width: 100%;
+        min-width: 600px; /* Ensure table is wider than viewport for scrolling */
+        table-layout: fixed;
+      }
+      
+      table tbody {
+        display: table;
+        width: 100%;
+        min-width: 600px; /* Match thead width for alignment */
+        table-layout: fixed;
+      }
+      
+      table tr {
+        display: table-row;
+      }
+      
+      table th,
+      table td {
+        display: table-cell;
+        white-space: nowrap;
+        padding: 0.5rem 0.75rem;
+        box-sizing: border-box;
+      }
+      
+      /* Set matching column widths for perfect alignment */
+      /* Model column - wider */
+      table thead th:nth-child(1),
+      table tbody td:nth-child(1) {
+        width: 25%;
+      }
+      
+      /* Metric columns - equal width */
+      table thead th:nth-child(2),
+      table tbody td:nth-child(2),
+      table thead th:nth-child(3),
+      table tbody td:nth-child(3),
+      table thead th:nth-child(4),
+      table tbody td:nth-child(4),
+      table thead th:nth-child(5),
+      table tbody td:nth-child(5),
+      table thead th:nth-child(6),
+      table tbody td:nth-child(6) {
+        width: 15%;
+      }
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.75rem 1rem;
+      text-align: left;
+    }
+
+    /* Reduce padding on small screens */
+    @media (max-width: 600px) {
+      th, td {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    th {
+      background-color: #f6f8fa;
+      font-weight: 600;
+      color: #111;
+      text-align: center;
+    }
+
+    td {
+      text-align: center;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    tr:hover {
+      background-color: #f0f0f0;
+    }
+
+    /* Style scrollbar for tables - visible on mobile for better UX */
+    table::-webkit-scrollbar {
+      height: 10px; /* Slightly taller for mobile touch targets */
+    }
+
+    table::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 5px;
+    }
+
+    table::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 5px;
+    }
+
+    table::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    /* Firefox scrollbar for tables */
+    table {
+      scrollbar-width: thin;
+      scrollbar-color: #888 #f1f1f1; /* More visible on mobile */
+    }
+
+    /* Make scrollbar more visible on small screens */
+    @media (max-width: 768px) {
+      table::-webkit-scrollbar {
+        height: 12px; /* Even taller on mobile */
+      }
+      
+      table::-webkit-scrollbar-thumb {
+        background: #666; /* Darker for better visibility */
+      }
+    }
+
+    /* ✅ Scrollable long equations - MathJax 3.x */
+    /* Target MathJax display math containers (various formats) */
+    .MathJax-Display,
+    .MathJax_Display,
+    div.MathJax_Display,
+    mjx-container[jax="CHTML"][display="true"],
+    mjx-container[display="true"] {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      margin: 1em 0 !important;
+      box-sizing: border-box;
+    }
+
+    /* Ensure the MathJax content itself can scroll horizontally */
+    /* Math content should maintain its natural width to allow scrolling */
+    mjx-container[jax="CHTML"][display="true"] > mjx-math,
+    mjx-container[display="true"] > mjx-math {
+      display: inline-block;
+    }
+
+    /* Style scrollbar for better UX on display equations */
+    /* Webkit browsers (Chrome, Safari, Edge) */
+    /* Hide scrollbar by default, show on hover or when scrolling */
+    .MathJax-Display::-webkit-scrollbar,
+    .MathJax_Display::-webkit-scrollbar,
+    div.MathJax_Display::-webkit-scrollbar,
+    mjx-container[jax="CHTML"][display="true"]::-webkit-scrollbar,
+    mjx-container[display="true"]::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .MathJax-Display::-webkit-scrollbar-track,
+    .MathJax_Display::-webkit-scrollbar-track,
+    div.MathJax_Display::-webkit-scrollbar-track,
+    mjx-container[jax="CHTML"][display="true"]::-webkit-scrollbar-track,
+    mjx-container[display="true"]::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .MathJax-Display::-webkit-scrollbar-thumb,
+    .MathJax_Display::-webkit-scrollbar-thumb,
+    div.MathJax_Display::-webkit-scrollbar-thumb,
+    mjx-container[jax="CHTML"][display="true"]::-webkit-scrollbar-thumb,
+    mjx-container[display="true"]::-webkit-scrollbar-thumb {
+      background: transparent;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    /* Show scrollbar on hover or when scrolling */
+    .MathJax-Display:hover::-webkit-scrollbar-thumb,
+    .MathJax_Display:hover::-webkit-scrollbar-thumb,
+    div.MathJax_Display:hover::-webkit-scrollbar-thumb,
+    mjx-container[jax="CHTML"][display="true"]:hover::-webkit-scrollbar-thumb,
+    mjx-container[display="true"]:hover::-webkit-scrollbar-thumb {
+      background: #ccc;
+    }
+
+    .MathJax-Display::-webkit-scrollbar-thumb:hover,
+    .MathJax_Display::-webkit-scrollbar-thumb:hover,
+    div.MathJax_Display::-webkit-scrollbar-thumb:hover,
+    mjx-container[jax="CHTML"][display="true"]::-webkit-scrollbar-thumb:hover,
+    mjx-container[display="true"]::-webkit-scrollbar-thumb:hover {
+      background: #999;
+    }
+
+    /* Firefox scrollbar styling - hidden by default, visible on hover */
+    .MathJax-Display,
+    .MathJax_Display,
+    div.MathJax_Display,
+    mjx-container[jax="CHTML"][display="true"],
+    mjx-container[display="true"] {
+      scrollbar-width: thin;
+      scrollbar-color: transparent transparent;
+    }
+
+    .MathJax-Display:hover,
+    .MathJax_Display:hover,
+    div.MathJax_Display:hover,
+    mjx-container[jax="CHTML"][display="true"]:hover,
+    mjx-container[display="true"]:hover {
+      scrollbar-color: #ccc transparent;
+    }
+
+    /* Ensure inline math doesn't break layout and doesn't show scrollbars */
+    mjx-container:not([display="true"]) {
+      display: inline-block;
+      max-width: 100%;
+      overflow-x: visible; /* No scrolling for inline math */
+      vertical-align: middle;
+    }
+
+    /* Hide scrollbars for inline math even if overflow occurs */
+    mjx-container:not([display="true"])::-webkit-scrollbar {
+      display: none;
+    }
+
+    mjx-container:not([display="true"]) {
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    {{ content }}
+  </main>
+</body>
+</html>
