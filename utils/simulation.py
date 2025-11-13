@@ -134,20 +134,28 @@ def generate_dataset(num_trajectories=5, save_path="dataset.npz"):
         anomaly_intervals = []
         x_ano = x.copy()
 
-        # 1. Force spike
-        idx = np.random.randint(2000, 6000)
-        x_ano = inject_force_spike(x_ano, idx, magnitude=0.5)
-        anomaly_intervals.append((idx, idx+5))
+        if np.random.rand() < 0.4:   # 40% chance → force spike
+            idx = np.random.randint(2000, 7000)
+            x_ano = inject_force_spike(x_ano, idx, magnitude=0.3, width=5)
+            anomaly_intervals.append((idx, idx+5))
 
-        # 2. Damping change
-        idx2 = np.random.randint(3000, 7000)
-        x_ano = inject_damping_change(x_ano, idx2)
-        anomaly_intervals.append((idx2, len(x_ano)))
+        if np.random.rand() < 0.3:   # 30% chance → short damping disturbance
+            idx2 = np.random.randint(3000, 7000)
+            end = idx2 + np.random.randint(300, 800)  # short interval, not full remainder
+            x_ano = inject_damping_change(x_ano, idx2, new_damping_factor=0.85)
+            anomaly_intervals.append((idx2, min(end, len(x_ano))))
 
-        # 3. Burst noise
-        idx3 = np.random.randint(1500, 6500)
-        x_ano = inject_burst_noise(x_ano, idx3)
-        anomaly_intervals.append((idx3, idx3+20))
+        if np.random.rand() < 0.3:   # 30% chance → burst noise
+            idx3 = np.random.randint(1500, 6500)
+            dur = np.random.randint(10, 30)
+            x_ano = inject_burst_noise(x_ano, idx3, duration=dur, std=0.2)
+            anomaly_intervals.append((idx3, idx3+dur))
+
+        if np.random.rand() < 0.2:   # 20% chance → local frequency shift
+            idx4 = np.random.randint(2000, 6000)
+            end = idx4 + np.random.randint(200, 600)
+            x_ano = inject_freq_shift(x_ano, idx4, shift_factor=1.1)
+            anomaly_intervals.append((idx4, end))
 
         # Windowing (use ~3 periods; pick window_size ~1000 samples)
         window_size = 1000
@@ -161,3 +169,7 @@ def generate_dataset(num_trajectories=5, save_path="dataset.npz"):
 
     np.savez(save_path, X=X_final, y=y_final)
     print(f"Saved dataset to {save_path}. Shape: {X_final.shape}, Labels: {y_final.shape}")
+
+
+if __name__ == "__main__":
+    generate_dataset()
