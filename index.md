@@ -19,10 +19,10 @@ Andrés Christian Meneguzzo
 ## Dataset
 ...
 
-## LSTM Neural Network and Autoencoder:
+## BiLSTM vs Unidirectional LSTM:
 ...
 
-## MSE loss vs. Physics-Informed loss
+## Fixed vs Adaptive $\lambda_{phys}$
 ...
 
 ## Implementation
